@@ -5,7 +5,7 @@ package main
 
 import (
 	// This is similar to package imports in Python
-	// "encoding/json"
+	"encoding/json"
 	// Allows you to decode json from the REST api call
 	"fmt"
 	// This allows you to input/output values
@@ -15,6 +15,8 @@ import (
 	// Allows get and post requests to be made
 	"io/ioutil"
 	// Adds the ability to interact with file IO
+	"regexp"
+	// Implements the ability to use regex
 )
 
 func createURL(tickerVal string) string {
@@ -43,11 +45,38 @@ func grabSite(urlVal string) string {
     }
 }
 
+func extractPrice(apiResponse string) string {
+	// This extracts the most recent trading price from the api call
+	re := regexp.MustCompile("open\\S:\\s.((\\d+).(\\d+))")
+	// Matches all opening prices using Regex
+	a := re.FindAllString(apiResponse, -1)
+	// Extracts all opening prices from the string
+	re = regexp.MustCompile("[0-9]+")
+	// Extracts digits from the opening prices
+	a = re.FindAllString(a[0], -1)
+	// Finds all strings that contain only digits
+	output := fmt.Sprintf("$%s.%s", a[0], a[1][:2])
+	// Sets output to the matched strings in proper $x.xx format
+	return output
+}
+
 
 func main() {
 	ticker := "AAPL"
+	// Stock ticker that the price will return
 	valTest := createURL(ticker)
-	fmt.Println(valTest)
-	fmt.Println(grabSite(valTest))
+	// This is the url
+	apiResponse := grabSite(valTest)
+	// This contains the actual network response
+
+    var stockInfo apiStruct
+	err := json.Unmarshal([]byte(apiResponse), &stockInfo)
+	if err != nil {
+        fmt.Println("error:", err)
+    }
+    fmt.Printf("%+v", stockInfo)
+    c := extractPrice(apiResponse)
+    fmt.Println("%q\n", c)
+	//
 	return
 }
