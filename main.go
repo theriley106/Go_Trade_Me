@@ -13,8 +13,6 @@ import (
 	// Logging info
 	"net/http"
 	// Allows get and post requests to be made
-	"net/url"
-	// THis allows go to parse urls
 )
 
 func main() {
