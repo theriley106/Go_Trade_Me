@@ -11,8 +11,10 @@ import (
 	// This allows you to input/output values
 	// "log"
 	// Logging info
-	// "net/http"
+	"net/http"
 	// Allows get and post requests to be made
+	"io/ioutil"
+	// Adds the ability to interact with file IO
 )
 
 func createURL(tickerVal string) string {
@@ -29,5 +31,12 @@ func main() {
 	ticker := "AAPL"
 	valTest := createURL(ticker)
 	fmt.Println(valTest)
+	response, err := http.Get(valTest)
+	if err != nil {
+        fmt.Printf("The HTTP request failed with error %s\n", err)
+    } else {
+        data, _ := ioutil.ReadAll(response.Body)
+        fmt.Println(string(data))
+    }
 	return
 }
