@@ -19,7 +19,7 @@ import (
 	// Adds the ability to interact with file IO
 	"regexp"
 	// Implements the ability to use regex
-	"time"
+	// "time"
 	// This allows you to interact with datetime
 )
 
@@ -31,7 +31,7 @@ type apiStruct struct {
 		// .Symbol returns the stock ticker
 		Refreshed string `json:"3. Last Refreshed"`
 		// .Refreshed returns the last refresh time
-		Refreshed string `json:"6. Time Zone"`
+		TimeZone string `json:"6. Time Zone"`
 		// .Refreshed returns the last refresh time
 		} `json:"Meta Data"`
 		// NO SPACE BETWEEN COLON WHEN SPACE IN JSON KEY
@@ -123,10 +123,7 @@ func main() {
     stockPrice := extractPrice(apiResponse)
     // This is a string that contains the stock price
     fmt.Println(stockPrice)
-	// Prints out the stock price
-	// formatting
-     diff := int32(time.Now().Unix())
-     fmt.Println(diff)
-     //parsed, _ := arrow.CParse("%Y-%m-%d %H:%M:%S", refreshTime)
+
 	return
 }
+
