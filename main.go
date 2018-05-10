@@ -93,13 +93,13 @@ func main() {
 	// This is the url
 	apiResponse := grabSite(valTest)
 	// This contains the actual network response
-
-	b := extractRefresh(apiResponse)
-
-    fmt.Printf("%+v\n", b)
-    fmt.Println(b)
-    c := extractPrice(apiResponse)
-    fmt.Println(c)
-	//
+	refreshTime := extractRefresh(apiResponse)
+	// Time that the stock quote was refreshed
+    fmt.Println(refreshTime)
+    // Prints out the time
+    stockPrice := extractPrice(apiResponse)
+    // This is a string that contains the stock price
+    fmt.Println(stockPrice)
+	// Prints out the stock price
 	return
 }
