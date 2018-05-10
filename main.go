@@ -19,6 +19,18 @@ import (
 	// Implements the ability to use regex
 )
 
+type apiStruct struct {
+		// Golang strucutre surrounding the api response
+        MetaData struct {
+        // Golang json structuring is weird...
+		Symbol          string `json:"2. Symbol"`
+		// .Symbol returns the stock ticker
+		Refreshed string `json:"3. Last Refreshed"`
+		// .Refreshed returns the last refresh time
+		} `json:"Meta Data"`
+		// NO SPACE BETWEEN COLON WHEN SPACE IN JSON KEY
+    }
+
 func createURL(tickerVal string) string {
 	// There needs to be two string because you have to define return type
 	var urlVal string
@@ -60,6 +72,19 @@ func extractPrice(apiResponse string) string {
 	return output
 }
 
+func extractRefresh(apiResponse string) string {
+	// This extracts the refresh date from the API Call
+	var stockInfo apiStruct
+	// Defines a variable called stockInfo that uses that apiStruct
+	err := json.Unmarshal([]byte(apiResponse), &stockInfo)
+	// Unmarshall basically decodes the json
+	if err != nil {
+		// There was an error
+        fmt.Println("error:", err)
+    }
+    return string(stockInfo.MetaData.Refreshed)
+}
+
 
 func main() {
 	ticker := "AAPL"
@@ -69,14 +94,12 @@ func main() {
 	apiResponse := grabSite(valTest)
 	// This contains the actual network response
 
-    var stockInfo apiStruct
-	err := json.Unmarshal([]byte(apiResponse), &stockInfo)
-	if err != nil {
-        fmt.Println("error:", err)
-    }
-    fmt.Printf("%+v", stockInfo)
+	b := extractRefresh(apiResponse)
+
+    fmt.Printf("%+v\n", b)
+    fmt.Println(b)
     c := extractPrice(apiResponse)
-    fmt.Println("%q\n", c)
+    fmt.Println(c)
 	//
 	return
 }
