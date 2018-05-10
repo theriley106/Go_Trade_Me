@@ -104,6 +104,13 @@ func extractTimeZone(apiResponse string) string {
     return string(stockInfo.MetaData.TimeZone)
 }
 
+func generateResponse(tickerVal string, priceVal string) string {
+	var responseVal string
+	responseVal = tickerVal
+	responseVal += " is currently trading at "
+	responseVal += priceVal
+	return responseVal
+}
 
 func main() {
 	ticker := "AAPL"
@@ -123,7 +130,8 @@ func main() {
     stockPrice := extractPrice(apiResponse)
     // This is a string that contains the stock price
     fmt.Println(stockPrice)
-
+    tf := generateResponse(ticker, stockPrice)
+    fmt.Println(tf)
 	return
 }
 
