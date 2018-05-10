@@ -1,5 +1,7 @@
 // This is my first Go program - Please don't judge it too harshly xD
 
+// go get github.com/bmuller/arrow/lib
+
 package main
 
 
@@ -17,6 +19,8 @@ import (
 	// Adds the ability to interact with file IO
 	"regexp"
 	// Implements the ability to use regex
+	"time"
+	// This allows you to interact with datetime
 )
 
 type apiStruct struct {
@@ -26,6 +30,8 @@ type apiStruct struct {
 		Symbol          string `json:"2. Symbol"`
 		// .Symbol returns the stock ticker
 		Refreshed string `json:"3. Last Refreshed"`
+		// .Refreshed returns the last refresh time
+		Refreshed string `json:"6. Time Zone"`
 		// .Refreshed returns the last refresh time
 		} `json:"Meta Data"`
 		// NO SPACE BETWEEN COLON WHEN SPACE IN JSON KEY
@@ -85,6 +91,19 @@ func extractRefresh(apiResponse string) string {
     return string(stockInfo.MetaData.Refreshed)
 }
 
+func extractTimeZone(apiResponse string) string {
+	// This extracts the refresh date from the API Call
+	var stockInfo apiStruct
+	// Defines a variable called stockInfo that uses that apiStruct
+	err := json.Unmarshal([]byte(apiResponse), &stockInfo)
+	// Unmarshall basically decodes the json
+	if err != nil {
+		// There was an error
+        fmt.Println("error:", err)
+    }
+    return string(stockInfo.MetaData.TimeZone)
+}
+
 
 func main() {
 	ticker := "AAPL"
@@ -95,11 +114,19 @@ func main() {
 	// This contains the actual network response
 	refreshTime := extractRefresh(apiResponse)
 	// Time that the stock quote was refreshed
-    fmt.Println(refreshTime)
+	fmt.Println(refreshTime)
     // Prints out the time
+	timeZone := extractTimeZone(apiResponse)
+	// Time zone that's dynamic based on api response
+	fmt.Println(timeZone)
+	// Prints out the time zone
     stockPrice := extractPrice(apiResponse)
     // This is a string that contains the stock price
     fmt.Println(stockPrice)
 	// Prints out the stock price
+	// formatting
+     diff := int32(time.Now().Unix())
+     fmt.Println(diff)
+     //parsed, _ := arrow.CParse("%Y-%m-%d %H:%M:%S", refreshTime)
 	return
 }
