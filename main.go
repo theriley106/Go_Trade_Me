@@ -26,17 +26,28 @@ func createURL(tickerVal string) string {
 	return urlVal
 }
 
+func grabSite(urlVal string) string {
+	// This grabs the site - similar to requests module in python
+	response, err := http.Get(urlVal)
+	// This gets the response
+	if err != nil {
+		// This means there was an error
+        return string(err.Error())
+        // Returns the error string
+    } else {
+    	// There was not an error
+        data, _ := ioutil.ReadAll(response.Body)
+        // Reads the response of the http get function
+        return string(data)
+        // Returns the response
+    }
+}
+
 
 func main() {
 	ticker := "AAPL"
 	valTest := createURL(ticker)
 	fmt.Println(valTest)
-	response, err := http.Get(valTest)
-	if err != nil {
-        fmt.Printf("The HTTP request failed with error %s\n", err)
-    } else {
-        data, _ := ioutil.ReadAll(response.Body)
-        fmt.Println(string(data))
-    }
+	fmt.Println(grabSite(valTest))
 	return
 }
