@@ -7,7 +7,7 @@ import (
 	// This is similar to package imports in Python
 	// "encoding/json"
 	// Allows you to decode json from the REST api call
-	// "fmt"
+	"fmt"
 	// This allows you to input/output values
 	// "log"
 	// Logging info
@@ -15,11 +15,19 @@ import (
 	// Allows get and post requests to be made
 )
 
-func createURL(tickerVal string) {
-	return ("https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=" + tickerVal + "&interval=1min&apikey=3ZC52BSRXYLK76YY")
+func createURL(tickerVal string) string {
+	// There needs to be two string because you have to define return type
+	var urlVal string
+	urlVal = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="
+	urlVal += tickerVal
+	urlVal += "&interval=1min&apikey=3ZC52BSRXYLK76YY"
+	return urlVal
 }
 
 
 func main() {
-	return createURL("AAPL")
+	ticker := "AAPL"
+	valTest := createURL(ticker)
+	fmt.Println(valTest)
+	return
 }
