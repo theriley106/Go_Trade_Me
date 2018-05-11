@@ -20,10 +20,18 @@ GOOS=linux go build -o main main.go
 
 zip deployment.zip main
 
+### Getting ID
+
+i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority[0].Values[0].Value.ID
+
+### Getting Slot Value
+
+i.Request.Intent.Slots.StockVals.Value
+
 ## Struct
 
 ```go
-type AlexaRequest struct {
+type GoTradeMeRequestStruct struct {
 	// This is the structure for the JSON input
 	Version string `json:"version"`
 	Request struct {
@@ -36,6 +44,21 @@ type AlexaRequest struct {
 				StockVals struct {
 					Name        string `json:"name"`
 					Value       string `json:"value"`
+					Resolutions struct {
+						ResolutionsPerAuthority []struct {
+							Authority string `json:"authority"`
+							Status    struct {
+								Code string `json:"code"`
+							} `json:"status"`
+							Values []struct {
+								Value struct {
+									Name string `json:"name"`
+									ID   string `json:"id"`
+								} `json:"value"`
+							} `json:"values"`
+						} `json:"resolutionsPerAuthority"`
+					} `json:"resolutions"`
+					ConfirmationStatus string `json:"confirmationStatus"`
 				} `json:"stockVals"`
 			} `json:"slots"`
 		} `json:"intent"`

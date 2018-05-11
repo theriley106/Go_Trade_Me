@@ -7,7 +7,7 @@ import (
 	"github.com/davecgh/go-spew/spew"
 )
 
-type AlexaRequest struct {
+type GoTradeMeRequestStruct struct {
 	// This is the structure for the JSON input
 	Version string `json:"version"`
 	Request struct {
@@ -20,6 +20,21 @@ type AlexaRequest struct {
 				StockVals struct {
 					Name        string `json:"name"`
 					Value       string `json:"value"`
+					Resolutions struct {
+						ResolutionsPerAuthority []struct {
+							Authority string `json:"authority"`
+							Status    struct {
+								Code string `json:"code"`
+							} `json:"status"`
+							Values []struct {
+								Value struct {
+									Name string `json:"name"`
+									ID   string `json:"id"`
+								} `json:"value"`
+							} `json:"values"`
+						} `json:"resolutionsPerAuthority"`
+					} `json:"resolutions"`
+					ConfirmationStatus string `json:"confirmationStatus"`
 				} `json:"stockVals"`
 			} `json:"slots"`
 		} `json:"intent"`
@@ -49,7 +64,7 @@ func (resp *AlexaResponse) Say(text string) {
 	resp.Response.OutputSpeech.Text = text
 }
 
-func HandleRequest(ctx context.Context, i AlexaRequest) (AlexaResponse, error) {
+func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse, error) {
 	// Use Spew to output the request for debugging purposes:
 	fmt.Println("---- Dumping Input Map: ----")
 	spew.Dump(i)
@@ -58,6 +73,7 @@ func HandleRequest(ctx context.Context, i AlexaRequest) (AlexaResponse, error) {
 	// Example of accessing map value via index:
 	log.Printf("Request type is ", i.Request.Intent.Name)
 	log.Printf("Request slot is ", i.Request.Intent.Slots.StockVals.Value)
+	log.Printf("Request ID is ", i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority[0].Values[0].Value.ID)
 
 	// Create a response object
 	resp := CreateResponse()
