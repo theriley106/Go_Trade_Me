@@ -17,6 +17,11 @@ type AlexaRequest struct {
 			Name               string `json:"name"`
 			ConfirmationStatus string `json:"confirmationstatus"`
 		} `json:"intent"`
+		Slot struct {
+			Name string `json:"name"`
+			Value string `json:"value"`
+		} `json:"slots"`
+		// Had to add slot values for stockVals
 	} `json:"request"`
 }
 
