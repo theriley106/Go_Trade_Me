@@ -13,12 +13,18 @@ https://www.youtube.com/watch?v=V-wE4SLZ9q4
 
 https://github.com/benr/alexa_go_prototype/blob/master/alexa_go_prototype.go
 
-
 ## Building
 
 GOOS=linux go build -o main main.go
 
 zip deployment.zip main
+
+## Getting Stock Tickers from Company Name
+
+<p align="center">
+<img src ="src/IDVals.png">
+</p>
+<p align="center">Setting the Valid Ticker as an ID Value in the ASK</p>
 
 ### Getting ID
 
