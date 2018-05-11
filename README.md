@@ -15,3 +15,7 @@ https://github.com/benr/alexa_go_prototype/blob/master/alexa_go_prototype.go
 
 
 ## Building
+
+GOOS=linux go build -o main main.go
+
+zip deployment.zip main
