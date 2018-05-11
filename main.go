@@ -157,7 +157,6 @@ func Handler(request alexa.Request) (alexa.Response, error) {
 }
 
 func main() {
-	lambda.Start(Handler)
 	ticker := "AAPL"
 	// Stock ticker that the price will return
 	valTest := createURL(ticker)
