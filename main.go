@@ -56,7 +56,7 @@ func grabSite(urlVal string) string {
 	// This gets the response
 	if err != nil {
 		// This means there was an error
-        return string(err.Error())
+        return string(urlVal + " Error")
         // Returns the error string
     } else {
     	// There was not an error
@@ -127,6 +127,7 @@ func main() {
 	// This is the url
 	apiResponse := grabSite(valTest)
 	// This contains the actual network response
+	fmt.Println(len(apiResponse))
 	refreshTime := extractRefresh(apiResponse)
 	// Time that the stock quote was refreshed
 	fmt.Println(refreshTime)

@@ -2,9 +2,7 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
-	"github.com/davecgh/go-spew/spew"
 )
 
 type GoTradeMeRequestStruct struct {
@@ -65,15 +63,6 @@ func (resp *AlexaResponse) Say(text string) {
 }
 
 func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse, error) {
-	// Use Spew to output the request for debugging purposes:
-	fmt.Println("---- Dumping Input Map: ----")
-	spew.Dump(i)
-	fmt.Println("---- Done. ----")
-
-	// Example of accessing map value via index:
-	log.Printf("Request type is ", i.Request.Intent.Name)
-	log.Printf("Request slot is ", i.Request.Intent.Slots.StockVals.Value)
-	log.Printf("Request ID is ", i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority[0].Values[0].Value.ID)
 
 	// Create a response object
 	resp := CreateResponse()
@@ -82,8 +71,33 @@ func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse
 	switch i.Request.Intent.Name {
 	case "officetemp":
 		resp.Say("The current temperature is 68 degrees.")
-	case "hello":
-		resp.Say("Hello there, Lambda appears to be working properly.  You chose" + string(i.Request.Intent.Slots.StockVals.Value))
+	case "getPrice":
+		if len(i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority) == 0 {
+			resp.Say("There is an issue")
+		} else {
+			idVal := string(i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority[0].Values[0].Value.ID)
+			stockName := string(i.Request.Intent.Slots.StockVals.Value)
+			log.Printf("Request type is ", i.Request.Intent.Name)
+			log.Printf("Request slot is ", stockName)
+			log.Printf("Request ID is ", idVal)
+
+			valTest := createURL(idVal)
+			// This is the url
+			apiResponse := grabSite(valTest)
+			// This contains the actual network response
+		    // Prints out the time
+			// Prints out the time zone
+			if len(apiResponse) < 2000 {
+				resp.Say("Error")
+			} else {
+		    stockPrice := extractPrice(apiResponse)
+		    // This is a string that contains the stock price
+		    responseVal := stockName
+		    responseVal += " is trading at "
+		    responseVal += stockPrice
+		    log.Printf(responseVal)
+			resp.Say(responseVal)}
+		}
 	case "AMAZON.HelpIntent":
 		resp.Say("This app is easy to use, just say: ask the office how warm it is")
 	default:
