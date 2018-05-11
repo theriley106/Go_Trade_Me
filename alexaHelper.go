@@ -15,14 +15,13 @@ type AlexaRequest struct {
 		Time   string `json:"timestamp"`
 		Intent struct {
 			Name               string `json:"name"`
-			ConfirmationStatus string `json:"confirmationstatus"`
-			StockVals struct {
-				Slot struct {
-					Name string `json:"name"`
-					Value string `json:"value"`
-				} `json:"slots"`
-				// Had to add slot values for stockVals
-			} `json:"stockVals"`
+			ConfirmationStatus string `json:"confirmationStatus"`
+			Slots              struct {
+				StockVals struct {
+					Name        string `json:"name"`
+					Value       string `json:"value"`
+				} `json:"stockVals"`
+			} `json:"slots"`
 		} `json:"intent"`
 	} `json:"request"`
 }
@@ -58,7 +57,7 @@ func HandleRequest(ctx context.Context, i AlexaRequest) (AlexaResponse, error) {
 
 	// Example of accessing map value via index:
 	log.Printf("Request type is ", i.Request.Intent.Name)
-	log.Printf("Request slot is ", i.Request.Intent.StockVals.Slot.Value)
+	log.Printf("Request slot is ", i.Request.Intent.Slots.StockVals.Value)
 
 	// Create a response object
 	resp := CreateResponse()
