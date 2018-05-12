@@ -156,9 +156,10 @@ func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse
 	// Create a response object
 	resp := CreateResponse()
 	// Customize the response for each Alexa Intent
+	log.Printf(i.Request.Type)
 	if i.Request.Type == "LaunchRequest" {
 		resp.Say("You just launched the skill")
-	}
+	} else {
 	switch i.Request.Intent.Name {
 	case "getPrice":
 		if len(i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority) == 0 {
@@ -190,7 +191,7 @@ func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse
 	default:
 		// This means it's the start up intent
 		resp.Say("I'm sorry, the input does not look like something I understand.")
-	}
+	}}
 
 	return *resp, nil
 }
