@@ -168,6 +168,11 @@ func generateHelpResponse() string {
 	return "Ask me for the current trading price of any publicly traded company"
 }
 
+func generateAboutDevResponse() string {
+	// This is the speech that plays when the user asks for help
+	return "created in May 2018 by Christopher Lambert.  This alexa skill is completely open sourced.  Please check out the skill on Git Hub or contact me for more information"
+}
+
 func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse, error) {
 	// Create a response object
 	resp := CreateResponse()
@@ -211,8 +216,11 @@ func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse
 					    // This is a string that contains the stock price
 						resp.Say(generateResponse(stockName, stockPrice), true)
 						// Returns the response correctly
+					}
 				}
-				}
+			case "aboutDev":
+				resp.Say(generateAboutDevResponse(), true)
+				// Returns information about the developer
 			case "AMAZON.HelpIntent":
 				resp.Say(generateHelpResponse(), false)
 				// Returns instructions for the skill
