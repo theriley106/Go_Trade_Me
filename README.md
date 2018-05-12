@@ -32,37 +32,37 @@ stockTicker := i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthor
 
 ```go
 type GoTradeMeRequestStruct struct {
-	// This is the structure for the JSON input
-	Version string `json:"version"`
-	Request struct {
-		Type   string `json:"type"`
-		Time   string `json:"timestamp"`
-		Intent struct {
-			Name               string `json:"name"`
-			ConfirmationStatus string `json:"confirmationStatus"`
-			Slots              struct {
-				StockVals struct {
-					Name        string `json:"name"`
-					Value       string `json:"value"`
-					Resolutions struct {
-						ResolutionsPerAuthority []struct {
-							Authority string `json:"authority"`
-							Status    struct {
-								Code string `json:"code"`
-							} `json:"status"`
-							Values []struct {
-								Value struct {
-									Name string `json:"name"`
-									ID   string `json:"id"`
-								} `json:"value"`
-							} `json:"values"`
-						} `json:"resolutionsPerAuthority"`
-					} `json:"resolutions"`
-					ConfirmationStatus string `json:"confirmationStatus"`
-				} `json:"stockVals"`
-			} `json:"slots"`
-		} `json:"intent"`
-	} `json:"request"`
+  // This is the structure for the JSON input
+  Version string `json:"version"`
+  Request struct {
+    Type   string `json:"type"`
+    Time   string `json:"timestamp"`
+    Intent struct {
+      Name               string `json:"name"`
+      ConfirmationStatus string `json:"confirmationStatus"`
+      Slots              struct {
+        StockVals struct {
+          Name        string `json:"name"`
+          Value       string `json:"value"`
+          Resolutions struct {
+            ResolutionsPerAuthority []struct {
+              Authority string `json:"authority"`
+              Status    struct {
+                Code string `json:"code"`
+              } `json:"status"`
+              Values []struct {
+                Value struct {
+                  Name string `json:"name"`
+                  ID   string `json:"id"`
+                } `json:"value"`
+              } `json:"values"`
+            } `json:"resolutionsPerAuthority"`
+          } `json:"resolutions"`
+          ConfirmationStatus string `json:"confirmationStatus"`
+        } `json:"stockVals"`
+      } `json:"slots"`
+    } `json:"intent"`
+  } `json:"request"`
 }
 ```
 
@@ -70,15 +70,15 @@ type GoTradeMeRequestStruct struct {
 
 ```go
 type AlexaResponse struct {
-	// This is the structure for the response object
-	Version  string `json:"version"`
-	Response struct {
-		OutputSpeech struct {
-			Type string `json:"type"`
-			Text string `json:"text"`
-		} `json:"outputSpeech"`
-		EndSession  bool `json:"shouldEndSession"`
-	} `json:"response"`
+  // This is the structure for the response object
+  Version  string `json:"version"`
+  Response struct {
+    OutputSpeech struct {
+      Type string `json:"type"`
+      Text string `json:"text"`
+    } `json:"outputSpeech"`
+    EndSession  bool `json:"shouldEndSession"`
+  } `json:"response"`
 }
 ```
 
