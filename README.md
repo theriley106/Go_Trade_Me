@@ -6,11 +6,11 @@ Alexa Skill made in Go that outputs current NYSE Stock Prices for a given stock 
 
 ## Building
 
-**GOOS=linux go build -o main *.go**
+<b>GOOS=linux go build -o main *.go</b>
 
-**zip deployment.zip main**
+<b>zip deployment.zip main</b>
 
-**Upload as ZIP in AWS Lambda**
+<b>Upload as ZIP in AWS Lambda</b>
 
 ## Getting Stock Tickers from Company Name
 

@@ -156,9 +156,10 @@ func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse
 	// Create a response object
 	resp := CreateResponse()
 	// Customize the response for each Alexa Intent
+	if i.Request.Type == "LaunchRequest" {
+		resp.Say("You just launched the skill")
+	}
 	switch i.Request.Intent.Name {
-	case "officetemp":
-		resp.Say("The current temperature is 68 degrees.")
 	case "getPrice":
 		if len(i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority) == 0 {
 			resp.Say("There is an issue")
@@ -185,8 +186,9 @@ func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse
 			resp.Say(responseVal)}
 		}
 	case "AMAZON.HelpIntent":
-		resp.Say("This app is easy to use, just say: ask the office how warm it is")
+		resp.Say("Ask me for the current trading price of any ")
 	default:
+		// This means it's the start up intent
 		resp.Say("I'm sorry, the input does not look like something I understand.")
 	}
 
