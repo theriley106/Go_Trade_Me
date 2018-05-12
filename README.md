@@ -1,43 +1,45 @@
 # Go_Trade_Me
 Alexa Skill made in Go that outputs current NYSE Stock Prices for a given stock ticker
 
-### This is my first Go program - Please don't judge it too harshly xD
+## *This is my first Go program - Please don't judge it too harshly xD*
 
 
-### Sample Utterances
+## Sample Utterances
 
-#### "Open Go Trade Me"
+### "Open Go Trade Me"
 
 ```
 Thanks for checking out Go Trade Me, an open sourced stock price tracker written in Go!
 ```
 
-#### "How do I use this skill?"
+### "How do I use this skill?"
 
 ```
 You can ask me for the current trading price of any publicly traded company!
 ```
 
-#### "What is Tesla currently trading at?"
+### "What is Tesla currently trading at?"
 
 ```
 Tesla is currently trading at $301.13
 ```
 
-#### "What is the trading price of Western Digital?"
+### "What is the trading price of Western Digital?"
 
 ```
 Western Digital is currently trading at $78.77
 ```
 
-#### "Tell me about the Developer"
+### "Tell me about the Developer"
 
 ```
-Created in May 2018 by Christopher Lambert.  This alexa skill is completely open sourced.  Please check out the skill on Github or contact me for more information.
+Created in May 2018 by Christopher Lambert.
+This alexa skill is completely open sourced.
+Please check out the skill on Github or contact me for more information.
 ```
 
 
-### Getting Stock Tickers from Company Name
+## Getting Stock Tickers from Company Name
 
 Each company name is saved as a slot value, and each slot value has an ID that corresponds to the stock ticker for that company.
 
@@ -48,7 +50,7 @@ stockTicker := i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthor
 // ie: GOOG, TSLA, HD, etc.
 ```
 
-### Request Structure
+## Request Structure
 
 ```go
 type GoTradeMeRequestStruct struct {
@@ -86,7 +88,7 @@ type GoTradeMeRequestStruct struct {
 }
 ```
 
-### Response Structure
+## Response Structure
 
 ```go
 type AlexaResponse struct {
@@ -138,7 +140,7 @@ type AlexaResponse struct {
 </p>
 <p>View from the Alexa Skill Kit</p>
 
-### Building
+## Building
 
 ```console
 foo@bar:~$ GOOS=linux go build -o main *.go
