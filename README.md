@@ -4,7 +4,7 @@ Alexa Skill made in Go that outputs current NYSE Stock Prices for a given stock 
 ### This is my first Go program - Please don't judge it too harshly xD
 
 
-## Building
+### Building
 
 <b>GOOS=linux go build -o main *.go</b>
 
@@ -12,22 +12,27 @@ Alexa Skill made in Go that outputs current NYSE Stock Prices for a given stock 
 
 <b>Upload as ZIP in AWS Lambda</b>
 
-## Getting Stock Tickers from Company Name
+or...
+
+<b>./deploy.sh</b>
+
+### Getting Stock Tickers from Company Name
 
 <p align="center">
 <img src ="src/IDVals.png">
 </p>
 <p align="center">Setting the Valid Ticker as an ID Value in the ASK</p>
 
-### Getting ID
+Each company name is saved as a slot value, and each slot value has an ID that corresponds to the stock ticker for that company.
 
-i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority[0].Values[0].Value.ID
+```go
+stockName := i.Request.Intent.Slots.StockVals.Value
+// ie: Google, Tesla, Home Depot, etc.
+stockTicker := i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority[0].Values[0].Value.ID
+// ie: GOOG, TSLA, HD, etc.
+```
 
-### Getting Slot Value
-
-i.Request.Intent.Slots.StockVals.Value
-
-## Struct
+### Request Structure
 
 ```go
 type GoTradeMeRequestStruct struct {
@@ -65,12 +70,18 @@ type GoTradeMeRequestStruct struct {
 }
 ```
 
-## References
+### Response Structure
 
-https://github.com/alco/gostart
-
-https://medium.com/@edwardpie/parsing-json-request-body-return-json-response-with-golang-c4f862bbb19b
-
-https://www.youtube.com/watch?v=V-wE4SLZ9q4
-
-https://github.com/benr/alexa_go_prototype/blob/master/alexa_go_prototype.go
+```go
+type AlexaResponse struct {
+	// This is the structure for the response object
+	Version  string `json:"version"`
+	Response struct {
+		OutputSpeech struct {
+			Type string `json:"type"`
+			Text string `json:"text"`
+		} `json:"outputSpeech"`
+		EndSession  bool `json:"shouldEndSession"`
+	} `json:"response"`
+}
+```
