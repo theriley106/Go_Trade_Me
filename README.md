@@ -4,8 +4,9 @@ Alexa Skill made in Go that outputs current NYSE Stock Prices for a given stock 
 ### This is my first Go program - Please don't judge it too harshly xD
 
 
-### Getting Stock Tickers from Company Name
+### Sample Utterances
 
+### Getting Stock Tickers from Company Name
 
 Each company name is saved as a slot value, and each slot value has an ID that corresponds to the stock ticker for that company.
 

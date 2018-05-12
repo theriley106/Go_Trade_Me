@@ -189,6 +189,9 @@ func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse
 				// This is the get price intent
 				if len(i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority) == 0 {
 					// This means there were no slots sent in this request
+					resp.Say(generateGeneralErrorResponse(), true)
+					// Returns a general error message
+				} else if string(i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority[0].Status.Code) == "ER_SUCCESS_NO_MATCH"  {
 					// Usually means the user asked about an invalid stock
 					// Or they didn't mention a stock at all
 					resp.Say(generateGeneralErrorResponse(), true)
