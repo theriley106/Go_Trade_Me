@@ -150,7 +150,7 @@ func generateResponse(tickerVal string, priceVal string) string {
 
 func generateStartResponse() string {
 	// This is the speech that plays when the skill is first started
-	return "You just launched the skill"
+	return "Thanks for checking out Go Trade Me!  You can ask me for the current trading price of any publicly traded company"
 }
 
 func generateAPIErrorResponse() string {
