@@ -4,21 +4,6 @@ Alexa Skill made in Go that outputs current NYSE Stock Prices for a given stock 
 ### This is my first Go program - Please don't judge it too harshly xD
 
 
-### Building
-
-```console
-foo@bar:~$ GOOS=linux go build -o main *.go
-foo@bar:~$ zip deployment.zip main
-```
-or...
-
-```console
-foo@bar:~$ ./deploy.sh
-```
-
-*Upload "deployment.zip" to AWS Lambda*
-
-
 ### Getting Stock Tickers from Company Name
 
 
@@ -120,3 +105,17 @@ type AlexaResponse struct {
 <img src ="src/IDVals.png">
 </p>
 <p>View from the Alexa Skill Kit</p>
+
+### Building
+
+```console
+foo@bar:~$ GOOS=linux go build -o main *.go
+foo@bar:~$ zip deployment.zip main
+```
+or...
+
+```console
+foo@bar:~$ ./deploy.sh
+```
+
+After building, upload "deployment.zip" to AWS Lambda
