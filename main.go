@@ -1,7 +1,5 @@
 // This is my first Go program - Please don't judge it too harshly xD
 
-// go get github.com/bmuller/arrow/lib
-
 package main
 
 
