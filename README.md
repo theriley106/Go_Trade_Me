@@ -113,7 +113,7 @@ type AlexaResponse struct {
 
 <b>or</b>
 
-<p align="center">
+<p>
 <img src ="src/IDVals.png">
 </p>
-<p align="center">View from the Alexa Skill Kit</p>
+<p>View from the Alexa Skill Kit</p>
