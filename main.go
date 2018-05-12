@@ -174,7 +174,7 @@ func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse
 	// Customize the response for each Alexa Intent
 	if i.Request.Type == "LaunchRequest" {
 		// This indicates the skill was just started
-		resp.Say(generateStartResponse(), true)
+		resp.Say(generateStartResponse(), false)
 		// This will make alexa say whatever response is returned
 	} else {
 		// This means the request was an intent rather than a launch
@@ -186,7 +186,7 @@ func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse
 					// This means there were no slots sent in this request
 					// Usually means the user asked about an invalid stock
 					// Or they didn't mention a stock at all
-					resp.Say(generateGeneralErrorResponse(), false)
+					resp.Say(generateGeneralErrorResponse(), true)
 					// Returns a general error message
 				} else {
 					idVal := string(i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority[0].Values[0].Value.ID)
@@ -203,22 +203,22 @@ func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse
 					// Prints out the time zone
 					if len(apiResponse) < 2000 {
 						// This means the api call was not successful
-						resp.Say(generateAPIErrorResponse(), false)
+						resp.Say(generateAPIErrorResponse(), true)
 						// This will make alexa say whatever response is returned
 					} else {
 						// This means the api call was successful
 					    stockPrice := extractPrice(apiResponse)
 					    // This is a string that contains the stock price
-						resp.Say(generateResponse(stockName, stockPrice), false)
+						resp.Say(generateResponse(stockName, stockPrice), true)
 						// Returns the response correctly
 				}
 				}
 			case "AMAZON.HelpIntent":
-				resp.Say(generateHelpResponse(), true)
+				resp.Say(generateHelpResponse(), false)
 				// Returns instructions for the skill
 			default:
 				// This means the user asked a question that the skill doesn't understand
-				resp.Say(generateHelpResponse(), true)
+				resp.Say(generateHelpResponse(), false)
 				// Returns instructions for using the skill
 		}
 	}
