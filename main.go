@@ -80,6 +80,7 @@ func createURL(tickerVal string) string {
 	urlVal = "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol="
 	urlVal += tickerVal
 	urlVal += "&interval=1min&apikey=3ZC52BSRXYLK76YY"
+	// ^ I know it's not a good idea to keep API keys in the code | key is on free tier
 	return urlVal
 }
 
@@ -172,7 +173,7 @@ func generateAboutDevResponse() string {
 }
 
 func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse, error) {
-	// Create a response object
+	// Reads request object
 	resp := CreateResponse()
 	// Customize the response for each Alexa Intent
 	if i.Request.Type == "LaunchRequest" {
