@@ -18,10 +18,6 @@ or...
 
 ### Getting Stock Tickers from Company Name
 
-<p align="center">
-<img src ="src/IDVals.png">
-</p>
-<p align="center">Setting the Valid Ticker as an ID Value in the ASK</p>
 
 Each company name is saved as a slot value, and each slot value has an ID that corresponds to the stock ticker for that company.
 
@@ -85,3 +81,39 @@ type AlexaResponse struct {
 	} `json:"response"`
 }
 ```
+
+### Slot Value Format
+
+```javascript
+{
+    "id": "WYN",
+"name": {
+    "value": "Wyndham Worldwide"
+    }
+},
+{
+    "id": "WYNN",
+"name": {
+    "value": "Wynn Resorts Ltd"
+    }
+},
+{
+    "id": "XEL",
+"name": {
+    "value": "Xcel Energy"
+    }
+},
+{
+    "id": "XRX",
+"name": {
+    "value": "Xerox Corp"
+    }
+}
+```
+
+<b>or</b>
+
+<p align="center">
+<img src ="src/IDVals.png">
+</p>
+<p align="center">View from the Alexa Skill Kit</p>
