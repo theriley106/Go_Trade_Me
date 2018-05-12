@@ -8,6 +8,7 @@ type AlexaResponse struct {
 			Type string `json:"type"`
 			Text string `json:"text"`
 		} `json:"outputSpeech"`
+		EndSession  bool `json:"shouldEndSession"`
 	} `json:"response"`
 }
 
@@ -19,6 +20,8 @@ func CreateResponse() *AlexaResponse {
 	return &resp
 }
 
-func (resp *AlexaResponse) Say(text string) {
+func (resp *AlexaResponse) Say(text string, keepActive bool) {
 	resp.Response.OutputSpeech.Text = text
+	resp.Response.EndSession = keepActive
+
 }
