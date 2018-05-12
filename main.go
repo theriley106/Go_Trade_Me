@@ -25,8 +25,6 @@ import (
 	// This is for interaction through lambda
 	// IDK why this needs to be defined in main.go instead of alexaHelper.go?
 	// ^ I guess because of the line in main()?
-	"log"
-	// For logging with lambda
 	"context"
 )
 
@@ -146,52 +144,84 @@ func extractTimeZone(apiResponse string) string {
 }
 
 func generateResponse(tickerVal string, priceVal string) string {
-	// This generates a string that contains speech a human can interperet
-	responseVal := tickerVal + " is currently trading at " + priceVal
-	return responseVal
+	// This is the speech that plays when the action was successful
+	return tickerVal + " is currently trading at " + priceVal
+}
+
+func generateStartResponse() string {
+	// This is the speech that plays when the skill is first started
+	return "You just launched the skill"
+}
+
+func generateAPIErrorResponse() string {
+	// This is the speech that plays when the API Call returns an error
+	return "It looks like there was an error with this stock quote.  Please try again later"
+}
+
+func generateGeneralErrorResponse() string {
+	// This is the speech that plays when an error is returned
+	return "There was an issue finding the trading value of this stock, please try again later"
+}
+
+func generateHelpResponse() string {
+	// This is the speech that plays when the user asks for help
+	return "Ask me for the current trading price of any publicly traded company"
 }
 
 func HandleRequest(ctx context.Context, i GoTradeMeRequestStruct) (AlexaResponse, error) {
-
 	// Create a response object
 	resp := CreateResponse()
 	// Customize the response for each Alexa Intent
-	log.Printf(i.Request.Type)
 	if i.Request.Type == "LaunchRequest" {
-		resp.Say("You just launched the skill")
+		// This indicates the skill was just started
+		resp.Say(generateStartResponse(), true)
+		// This will make alexa say whatever response is returned
 	} else {
-	switch i.Request.Intent.Name {
-	case "getPrice":
-		if len(i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority) == 0 {
-			resp.Say("There is an issue")
-		} else {
-			idVal := string(i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority[0].Values[0].Value.ID)
-			stockName := string(i.Request.Intent.Slots.StockVals.Value)
-			log.Printf("Request type is ", i.Request.Intent.Name)
-			log.Printf("Request slot is ", stockName)
-			log.Printf("Request ID is ", idVal)
-
-			valTest := createURL(idVal)
-			// This is the url
-			apiResponse := grabSite(valTest)
-			// This contains the actual network response
-		    // Prints out the time
-			// Prints out the time zone
-			if len(apiResponse) < 2000 {
-				resp.Say("It looks like there was an error with this stock quote.  Please try again later")
-			} else {
-		    stockPrice := extractPrice(apiResponse)
-		    // This is a string that contains the stock price
-		    responseVal := stockName + " is currently trading at " + stockPrice
-		    log.Printf(responseVal)
-			resp.Say(responseVal)}
+		// This means the request was an intent rather than a launch
+		switch i.Request.Intent.Name {
+			// This is the intent name that is assigned in ASK
+			case "getPrice":
+				// This is the get price intent
+				if len(i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority) == 0 {
+					// This means there were no slots sent in this request
+					// Usually means the user asked about an invalid stock
+					// Or they didn't mention a stock at all
+					resp.Say(generateGeneralErrorResponse(), false)
+					// Returns a general error message
+				} else {
+					idVal := string(i.Request.Intent.Slots.StockVals.Resolutions.ResolutionsPerAuthority[0].Values[0].Value.ID)
+					// This is the stock ticker.  Ie: GOOG, TSLA, HD, etc.
+					stockName := string(i.Request.Intent.Slots.StockVals.Value)
+					// Sets stockName to the same that was said in the intent
+					// This is the REAL SLOT VALUE
+					// Stock ticker is the ID VALUE
+					valTest := createURL(idVal)
+					// This is the url of the API endpoint
+					apiResponse := grabSite(valTest)
+					// This contains the actual network response
+				    // Prints out the time
+					// Prints out the time zone
+					if len(apiResponse) < 2000 {
+						// This means the api call was not successful
+						resp.Say(generateAPIErrorResponse(), false)
+						// This will make alexa say whatever response is returned
+					} else {
+						// This means the api call was successful
+					    stockPrice := extractPrice(apiResponse)
+					    // This is a string that contains the stock price
+						resp.Say(generateResponse(stockName, stockPrice), false)
+						// Returns the response correctly
+				}
+				}
+			case "AMAZON.HelpIntent":
+				resp.Say(generateHelpResponse(), true)
+				// Returns instructions for the skill
+			default:
+				// This means the user asked a question that the skill doesn't understand
+				resp.Say(generateHelpResponse(), true)
+				// Returns instructions for using the skill
 		}
-	case "AMAZON.HelpIntent":
-		resp.Say("Ask me for the current trading price of any ")
-	default:
-		// This means it's the start up intent
-		resp.Say("I'm sorry, the input does not look like something I understand.")
-	}}
+	}
 
 	return *resp, nil
 }
