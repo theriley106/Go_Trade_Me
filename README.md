@@ -6,6 +6,37 @@ Alexa Skill made in Go that outputs current NYSE Stock Prices for a given stock 
 
 ### Sample Utterances
 
+#### "Open Go Trade Me"
+
+```
+Thanks for checking out Go Trade Me, an open sourced stock price tracker written in Go!
+```
+
+#### "How do I use this skill?"
+
+```
+You can ask me for the current trading price of any publicly traded company!
+```
+
+#### "What is Tesla currently trading at?"
+
+```
+Tesla is currently trading at $301.13
+```
+
+#### "What is the trading price of Western Digital?"
+
+```
+Western Digital is currently trading at $78.77
+```
+
+#### "Tell me about the Developer"
+
+```
+Created in May 2018 by Christopher Lambert.  This alexa skill is completely open sourced.  Please check out the skill on Github or contact me for more information.
+```
+
+
 ### Getting Stock Tickers from Company Name
 
 Each company name is saved as a slot value, and each slot value has an ID that corresponds to the stock ticker for that company.
