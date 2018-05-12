@@ -6,33 +6,33 @@ Golang Alexa Skill that outputs current NYSE Stock Prices for a given stock tick
 ### "Open Go Trade Me"
 
 ```
-Alexa: "Thanks for checking out Go Trade Me, an open sourced stock price tracker written in Go!"
+"Thanks for checking out Go Trade Me, an open sourced stock price tracker written in Go!"
 ```
 
 ### "How do I use this skill?"
 
 ```
-Alexa: "You can ask me for the current trading price of any publicly traded company!"
+"You can ask me for the current trading price of any publicly traded company!"
 ```
 
 ### "What is Tesla currently trading at?"
 
 ```
-Alexa: "Tesla is currently trading at $301.13"
+"Tesla is currently trading at $301.13"
 ```
 
 ### "What is the trading price of Western Digital?"
 
 ```
-Alexa: "Western Digital is currently trading at $78.77"
+"Western Digital is currently trading at $78.77"
 ```
 
 ### "Tell me about the Developer"
 
 ```
-Alexa: "Created in May 2018 by Christopher Lambert."
-Alexa: "This alexa skill is completely open sourced."
-Alexa: "Please check out the skill on Github or contact me for more information."
+"Created in May 2018 by Christopher Lambert."
+"This alexa skill is completely open sourced."
+"Please check out the skill on Github or contact me for more information."
 ```
 
 
